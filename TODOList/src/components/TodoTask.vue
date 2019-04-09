@@ -1,11 +1,12 @@
 <template>
-<div v-if="!isEditable" class="nonEditableTask">
-  <label  :class="{done: isDone}" @click="clickLabelEvent()"><b>{{name}}</b></label> <div class="taskBar"><TodoTaskBar :idTask=this.idTask></TodoTaskBar></div>
+<div v-if="!this.task.isEditable" class="nonEditableTask">
+  <label  :class="{done: this.task.isDone}" @click="clickLabelEvent()"><b>{{task.name}}</b></label> <div class="taskBar">
+    <TodoTaskBar :task="task"></TodoTaskBar></div>
 </div>
 <div v-else class="editableTask">
-  <input class="editableField" :value=name placeholder="TODO ?" @blur="editDoneEvent($event.srcElement.value)"> 
+  <input class="editableField" :value=task.name placeholder="TODO ?" @blur="editDoneEvent($event.srcElement.value)"> 
   <div class="taskBar">
-    <TodoTaskBar :idTask=this.idTask></TodoTaskBar>
+    <TodoTaskBar :task="task"></TodoTaskBar>
   </div>
 </div>
 </template>
@@ -14,6 +15,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import TodoTaskBar from '@/components/TodoTaskBar.vue';
 import { TaskService } from '@/services/TaskService';
+import {Task} from '@/interfaces/task';
 
 @Component({
   components: {
@@ -21,24 +23,21 @@ import { TaskService } from '@/services/TaskService';
   },
 })
 export default class TodoTask extends Vue {
+  @Prop() task!: Task;
   @Prop() index!: number;
-  @Prop() idTask!: number;
-  @Prop() name!: string;
-  @Prop() isDone!: boolean;
-  @Prop() isEditable!: boolean;
 
   constructor() {
       super();
   }
 
   clickLabelEvent() {
-    this.$emit("update:isEditable", !this.isEditable);
+    this.$emit("update:isEditable", !this.task.isEditable);
   }
 
   editDoneEvent(value: string) {
     if (value && value.trim() !== "") {
-      this.$emit("update:name", value);
-      this.$emit("update:isEditable", false);
+      this.task.name = value;
+      this.task.isEditable = false;
       this.$emit("taskSaveEvent", this.index);
     }
   }

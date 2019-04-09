@@ -1,9 +1,9 @@
 <template>
 <div id="taskList">
   <div class="taskDiv" v-for="(task, index) in tasks"  :key="task.index">
-    <TodoTask :isDone=task.isDone :index=index :idTask=task.id
+    <TodoTask :index="index" :task="task"
     @taskSaveEvent="taskSaveEvent($event)" @taskDelete="taskDeleteEvent($event)" @taskDone="taskDoneEvent($event)"
-    :isEditable.sync="task.isEditable" :name.sync="task.name"></TodoTask>
+    :isEditable.sync="task.isEditable"></TodoTask>
   </div>
 </div>
 </template>
@@ -76,5 +76,6 @@ export default class TodoTaskList extends Vue {
 
 div.taskDiv {
   text-align: left;
+  margin: 6px;
 }
 </style>

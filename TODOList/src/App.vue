@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img alt="Scalian logo" src="./assets/logo_Todo.png">
     <TodoHeader></TodoHeader>
     <TodoTaskList ref="tasksList"></TodoTaskList>
     <div id="footer">

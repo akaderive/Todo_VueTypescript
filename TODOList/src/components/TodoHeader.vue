@@ -1,7 +1,8 @@
 <template>
 <div>
-  <label><h1>{{title}}</h1></label>
-  <img alt="Vue logo" src="./../assets/logo_vue.png" style="max-height: 50px; max-width: 50px;">
+    <b-jumbotron :header='this.title' lead="Vue, Typescript et Bootstrap">
+       <img alt="Todo logo" src="@/assets/logo_Todo.png">
+    </b-jumbotron>
 </div>
 </template>
 
@@ -14,7 +15,7 @@ export default class TodoHeader extends Vue {
 
   constructor() {
       super();
-      this.title = 'TODOs avec VueJS et Typescript';
+      this.title = 'TODO List';
   }
 }
 </script>
