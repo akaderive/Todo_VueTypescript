@@ -2,11 +2,11 @@
 <div>
   <b-button-group>
     <b-button @click="taskDone" class="successButton" />
-    <b-button @click="taskDetails" v-b-modal="'modal-' + this.task.id" class="detailsButton" />
+    <b-button @click="showModal" class="detailsButton" />
     <b-button @click="taskDelete" class="deleteButton" />
   </b-button-group>
 
-  <b-modal :id="'modal-' + this.task.id" :title="task.name" header-bg-variant="primary" centered cancel-disabled ok-only>
+  <b-modal :ref="'modal-' + this.index" :title="task.name" header-bg-variant="primary" centered cancel-disabled ok-only>
     <b>Date de creation :</b> {{this.getCreationDateFormated()}}
     <div style="text-align:center; margin-top:20px;">
     <h4>
@@ -21,35 +21,33 @@
 <script lang="ts">
 import { Component, Vue, Prop} from 'vue-property-decorator';
 import {Task} from '@/interfaces/task';
+import { Modal } from 'bootstrap-vue';
 
 @Component
 export default class TodoTaskBar extends Vue {
-  @Prop() task!: Task;
-  private isModalVisible: boolean = false;
+  @Prop() public task!: Task;
+  @Prop() public index!: number;
 
   constructor() {
       super();
   }
 
-  taskDone() {
-    this.$parent.$emit("taskDone", this.$parent);
+  private taskDone() {
+    this.$emit('taskDone');
   }
 
-  taskDetails() {
-    this.isModalVisible = true;
+  private taskDelete() {
+    this.$parent.$emit('taskDelete', this.$parent);
   }
 
-  closeTaskDetails() {
-    this.isModalVisible = false;
+  private showModal() {
+    (this.$refs['modal-' + this.index] as Modal).show();
   }
 
-  taskDelete() {
-    this.$parent.$emit("taskDelete", this.$parent);
-  }
-
-  getCreationDateFormated() {
-    let date: Date = new Date(this.task.creationDate);
-    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+  private getCreationDateFormated() {
+    const date: Date = new Date(this.task.creationDate);
+    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear()
+      + ' ' + date.getHours() + ':' + date.getMinutes();
   }
 }
 </script>

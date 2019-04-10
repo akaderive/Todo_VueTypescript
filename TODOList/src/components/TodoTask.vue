@@ -1,7 +1,7 @@
 <template>
 <div v-if="!this.task.isEditable" class="nonEditableTask">
   <label  :class="{done: this.task.isDone}" @click="clickLabelEvent()"><b>{{task.name}}</b></label> <div class="taskBar">
-    <TodoTaskBar :task="task"></TodoTaskBar></div>
+    <TodoTaskBar :task="task" :index="index" @taskDone="taskDoneEvent($event)"></TodoTaskBar></div>
 </div>
 <div v-else class="editableTask">
   <input class="editableField" :value=task.name placeholder="TODO ?" @blur="editDoneEvent($event.srcElement.value)"> 
@@ -19,27 +19,31 @@ import {Task} from '@/interfaces/task';
 
 @Component({
   components: {
-    TodoTaskBar
+    TodoTaskBar,
   },
 })
 export default class TodoTask extends Vue {
-  @Prop() task!: Task;
-  @Prop() index!: number;
+  @Prop() public task!: Task;
+  @Prop() public index!: number;
 
   constructor() {
       super();
   }
 
-  clickLabelEvent() {
-    this.$emit("update:isEditable", !this.task.isEditable);
+  private clickLabelEvent() {
+    this.$emit('update:isEditable', !this.task.isEditable);
   }
 
-  editDoneEvent(value: string) {
-    if (value && value.trim() !== "") {
+  private editDoneEvent(value: string) {
+    if (value && value.trim() !== '') {
       this.task.name = value;
       this.task.isEditable = false;
-      this.$emit("taskSaveEvent", this.index);
+      this.$emit('taskSaveEvent', this.index);
     }
+  }
+
+  private taskDoneEvent() {
+    this.$emit('taskDone', this);
   }
 }
 </script>

@@ -16,7 +16,7 @@
     },
     {
       "name": "Remplir JIRA",
-      "isDone": true,
+      "isDone": false,
       "isEditable": false,
       "creationDate": "2019-03-28T10:30:50.261Z",
       "id": 15
@@ -27,13 +27,6 @@
       "isEditable": false,
       "creationDate": "2019-04-02T09:03:50.261Z",
       "id": 17
-    },
-    {
-      "name": "mangeeeeer",
-      "isDone": true,
-      "isEditable": false,
-      "creationDate": "2019-04-09T09:41:15.161Z",
-      "id": 18
     }
   ]
 }

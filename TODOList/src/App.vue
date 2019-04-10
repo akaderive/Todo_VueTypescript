@@ -3,7 +3,7 @@
     <TodoHeader></TodoHeader>
     <TodoTaskList ref="tasksList"></TodoTaskList>
     <div id="footer">
-      <TodoAddTask v-on:addTaskEvent="addTaskEvent"></TodoAddTask>
+      <TodoAddTask @addTaskEvent="addTaskEvent"></TodoAddTask>
     </div>
   </div>
 </template>
@@ -18,11 +18,11 @@ import TodoAddTask from '@/components/TodoAddTask.vue';
   components: {
     TodoHeader,
     TodoTaskList,
-    TodoAddTask
+    TodoAddTask,
   },
 })
 export default class App extends Vue {
-  addTaskEvent() {
+  private addTaskEvent() {
     (this.$refs.tasksList as TodoTaskList).addTask();
   }
 }

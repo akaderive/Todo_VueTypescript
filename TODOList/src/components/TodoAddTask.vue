@@ -10,8 +10,8 @@ import { Component, Vue, Emit } from 'vue-property-decorator';
 @Component
 export default class TodoAddTask extends Vue {
 
-  addTaskEvent() {
-    this.$emit("addTaskEvent");
+  private addTaskEvent() {
+    this.$emit('addTaskEvent');
   }
 }
 </script>

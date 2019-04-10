@@ -17,7 +17,7 @@ import { AxiosResponse} from 'axios';
 
 @Component({
   components: {
-    TodoTask
+    TodoTask,
   },
 })
 export default class TodoTaskList extends Vue {
@@ -25,31 +25,31 @@ export default class TodoTaskList extends Vue {
 
   constructor() {
       super();
-      TaskService.getTasks().then(response => this.handleTasksResponse(response));
+      TaskService.getTasks().then((response) => this.handleTasksResponse(response));
   }
 
-  handleTasksResponse(response: AxiosResponse<Task[]>) {
+  private handleTasksResponse(response: AxiosResponse<Task[]>) {
       this.tasks = response.data;
   }
 
-  taskDeleteEvent(event: TodoTask) {
-    let taskToDelete: Task = this.tasks[event.index];
+  private taskDeleteEvent(event: TodoTask) {
+    const taskToDelete: Task = this.tasks[event.index];
     if (taskToDelete.id !== undefined) {
       TaskService.deleteTask(this.tasks[event.index]);
     }
     this.tasks.splice(event.index, 1);
   }
 
-  taskDoneEvent(event: TodoTask) {
+  private taskDoneEvent(event: TodoTask) {
       this.tasks[event.index].isDone = !this.tasks[event.index].isDone;
       this.saveOrUpdateTask(this.tasks[event.index]);
   }
 
-  addTask() {
-    this.tasks.push({name:'', isDone: false, isEditable: true, creationDate: new Date()});
+  public addTask() {
+    this.tasks.push({name: '', isDone: false, isEditable: true, creationDate: new Date()});
   }
 
-  taskSaveEvent(index: number) {
+  private taskSaveEvent(index: number) {
     this.saveOrUpdateTask(this.tasks[index]);
   }
 
@@ -61,8 +61,8 @@ export default class TodoTaskList extends Vue {
     }
   }
 
-  private onPostTaskResponse(task: Task, response: AxiosResponse<Task>) {
-    task.id = response.data.id
+  private onPostTaskResponse(taskToUpdate: Task, response: AxiosResponse<Task>) {
+    taskToUpdate.id = response.data.id;
     this.$forceUpdate(); // Reload pour que la liste soit rechargée avec le nouvel id généré
   }
 }
