@@ -37,7 +37,7 @@ export default class TodoTaskBar extends Vue {
   }
 
   private taskDelete() {
-    this.$parent.$emit('taskDelete', this.$parent);
+    this.$emit('taskDelete');
   }
 
   private showModal() {

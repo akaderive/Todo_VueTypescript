@@ -1,12 +1,12 @@
 <template>
 <div v-if="!this.task.isEditable" class="nonEditableTask">
   <label  :class="{done: this.task.isDone}" @click="clickLabelEvent()"><b>{{task.name}}</b></label> <div class="taskBar">
-    <TodoTaskBar :task="task" :index="index" @taskDone="taskDoneEvent($event)"></TodoTaskBar></div>
+    <TodoTaskBar :task="task" :index="index" @taskDone="taskDoneEvent()" @taskDelete="taskDeleteEvent()"></TodoTaskBar></div>
 </div>
 <div v-else class="editableTask">
   <input class="editableField" :value=task.name placeholder="TODO ?" @blur="editDoneEvent($event.srcElement.value)"> 
   <div class="taskBar">
-    <TodoTaskBar :task="task"></TodoTaskBar>
+    <TodoTaskBar :task="task" @taskDelete="taskDeleteEvent()"></TodoTaskBar>
   </div>
 </div>
 </template>
@@ -44,6 +44,10 @@ export default class TodoTask extends Vue {
 
   private taskDoneEvent() {
     this.$emit('taskDone', this);
+  }
+
+  private taskDeleteEvent() {
+    this.$emit('taskDelete', this);
   }
 }
 </script>
